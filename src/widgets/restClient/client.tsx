@@ -15,6 +15,8 @@ import { CodeGenerator } from '~/widgets/codeGenerator/generator';
 import HeadersEditor, { HeadersItem } from '~/widgets/headersEditor/editor';
 import { ResponseViewer } from '~/widgets/response/response';
 
+import { HeadersViewer } from '../headers/headers';
+import { Tab, Tabs } from '../tabs/tabs';
 import styles from './client.module.css';
 
 type TQuery = { [key: string]: string | string[] | undefined };
@@ -192,13 +194,43 @@ export default function RestClient({
           {dict.send}
         </button>
       </form>
-      <HeadersEditor dict={dict} headers={headers} setHeaders={setHeaders} />
-      <section aria-label="body">
-        <h3 className={styles.client__section_title}>{dict.body}</h3>
-        <CodeEditor name="body" data={state.body} onBlur={handleBodyChange} />
-      </section>
-      {response.data && <ResponseViewer dict={dict} response={response} />}
-      <CodeGenerator dict={dict} data={stateWithVariables} />
+      <Tabs
+        tabs={
+          [
+            {
+              label: dict.headers,
+              content: <HeadersEditor dict={dict} headers={headers} setHeaders={setHeaders} />,
+            },
+            ['POST', 'PUT', 'PATCH'].includes(state.method.toUpperCase())
+              ? {
+                  label: dict.body,
+                  content: (
+                    <section aria-label="body">
+                      <h3 className={styles.client__section_title}>{dict.body}</h3>
+                      <CodeEditor name="body" data={state.body} onBlur={handleBodyChange} />
+                    </section>
+                  ),
+                }
+              : null,
+            {
+              label: dict.response,
+              content: response.data ? <ResponseViewer dict={dict} response={response} /> : dict.responseEmpty,
+            },
+            {
+              label: dict.responseHeaders,
+              content: response.headers ? (
+                <HeadersViewer dict={dict} headers={response.headers} />
+              ) : (
+                dict.responseHeadersEmpty
+              ),
+            },
+            {
+              label: dict.code,
+              content: <CodeGenerator dict={dict} data={stateWithVariables} />,
+            },
+          ].filter(Boolean) as Tab[]
+        }
+      />
     </div>
   );
 }

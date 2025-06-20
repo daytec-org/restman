@@ -3,7 +3,7 @@
   padding: 0.5rem;
   border-radius: var(--border-radius);
   border: var(--border-thickness) solid var(--color30);
-  height: 12rem;
+  height: 100%;
   font-size: 0.875rem;
   background-color: var(--color10);
 }

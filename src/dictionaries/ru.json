@@ -73,7 +73,9 @@
     "code": "Сгенерировать код",
     "codePlaceholder": "среда",
     "response": "Ответ",
+    "responseEmpty": "Ответ пуст",
     "responseHeaders": "Заголовки ответа",
+    "responseHeadersEmpty": "Заголовки ответа пусты",
     "status": "Статус"
   },
   "History": {

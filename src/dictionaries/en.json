@@ -73,7 +73,9 @@
     "code": "Generate code",
     "codePlaceholder": "runtime",
     "response": "Response",
+    "responseEmpty": "Response is empty",
     "responseHeaders": "Response headers",
+    "responseHeadersEmpty": "Response headers are empty",
     "status": "Status"
   },
   "History": {
